@@ -204,8 +204,19 @@
             position: relative;
         }
         .nav-link:hover, .nav-link.is-active { color: var(--ink); background: var(--accent-soft); }
-        .nav-cv { background: var(--accent) !important; color: #fff !important; }
-        .nav-cv:hover { background: #a83508 !important; color: #fff !important; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(200,65,10,0.35); }
+        .nav-cv {
+            border: 1.5px solid rgba(200,65,10,0.45) !important;
+            color: var(--accent) !important;
+            background: rgba(200,65,10,0.07) !important;
+        }
+        .nav-cv:hover {
+            background: rgba(200,65,10,0.16) !important;
+            border-color: var(--accent) !important;
+            color: var(--accent) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(200,65,10,0.22);
+        }
+        .nav-cv-mobile { display: none; }
         .nav-link.is-active::after {
             content: "";
             position: absolute;
@@ -973,83 +984,12 @@
         [data-theme="light"] .extra-item,
         [data-theme="light"] .panel-head h3 { color: #111111 !important; }
 
-        /* ═══ INTRO OVERLAY ═══ */
-        #intro-overlay {
-            position: fixed; inset: 0;
-            z-index: 99999;
-            background: radial-gradient(ellipse at 40% 50%, #1a0d04 0%, #0a0500 55%, #050200 100%);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        #intro-overlay.intro-exit {
-            animation: introWipe 0.9s cubic-bezier(0.76,0,0.24,1) forwards;
-            pointer-events: none;
-        }
-        @keyframes introWipe {
-            0%   { clip-path: inset(0 0 0 0); opacity: 1; }
-            60%  { opacity: 1; }
-            100% { clip-path: inset(100% 0 0 0); opacity: 0; }
-        }
-        
-        .intro-content {
-            position: relative; z-index: 2;
-            display: flex; flex-direction: column; align-items: center;
-            width: 100%; max-width: 780px; padding: 0 24px; gap: 0;
-        }
-        .intro-bigname {
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: clamp(4rem, 14vw, 9rem);
-            font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            text-align: center;
-            color: #fff;
-            opacity: 0;
-            transform: scale(0.92) translateY(14px);
-            transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1);
-            margin-bottom: 18px;
-        }
-        .intro-bigname.show { opacity: 1; transform: scale(1) translateY(0); }
-        .name-glitch { position: relative; display: inline-block; }
-        .name-glitch::before,.name-glitch::after { content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;opacity:0; }
-        .intro-bigname.glitching .name-glitch::before { opacity:0.75;color:#ff6020;clip-path:polygon(0 22%,100% 22%,100% 42%,0 42%);transform:translateX(-5px);animation:glA 0.12s steps(2) infinite; }
-        .intro-bigname.glitching .name-glitch::after { opacity:0.75;color:#ffd060;clip-path:polygon(0 62%,100% 62%,100% 78%,0 78%);transform:translateX(5px);animation:glB 0.12s steps(2) infinite 0.05s; }
-        @keyframes glA { 0%{clip-path:polygon(0 22%,100% 22%,100% 42%,0 42%);transform:translateX(-5px);} 50%{clip-path:polygon(0 52%,100% 52%,100% 70%,0 70%);transform:translateX(5px);} }
-        @keyframes glB { 0%{clip-path:polygon(0 62%,100% 62%,100% 78%,0 78%);transform:translateX(5px);} 50%{clip-path:polygon(0 15%,100% 15%,100% 32%,0 32%);transform:translateX(-5px);} }
-
-        .intro-tagline {
-            font-family: "JetBrains Mono", monospace;
-            font-size: clamp(0.58rem, 1.2vw, 0.72rem);
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: rgba(200,65,10,0.80);
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.6s ease 0.4s;
-        }
-        .intro-tagline.show { opacity: 1; }
-
-        .intro-skip-btn {
-            position: absolute; bottom: 22px; right: 22px; z-index: 10;
-            font-family: "JetBrains Mono", monospace;
-            font-size: 0.60rem; letter-spacing: 0.14em; text-transform: uppercase;
-            color: rgba(200,65,10,0.40); background: transparent;
-            border: 1px solid rgba(200,65,10,0.22); border-radius: 5px;
-            padding: 7px 14px; cursor: pointer;
-            transition: all 0.2s ease;
-            opacity: 0; animation: fadeUp 0.5s ease forwards 0.5s;
-        }
-        .intro-skip-btn:hover { color: rgba(200,65,10,0.9); border-color: rgba(200,65,10,0.55); background: rgba(200,65,10,0.06); }
-        .intro-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 3; }
-        .intro-flash.active { animation: flashOut 0.4s ease forwards; }
-        @keyframes flashOut { 0%{opacity:0.15;} 100%{opacity:0;} }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 
         /* ═══ RESPONSIVE ═══ */
         @media (max-width: 1100px) {
             .nav { display: none; }
             .cap-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+            .nav-cv-mobile { display: inline-flex; }
         }
         @media (max-width: 860px) {
             .shell { width: min(calc(100% - 24px), var(--max-width)); }
@@ -1081,18 +1021,6 @@
 </head>
 <body>
 
-<!-- ═══ INTRO OVERLAY ═══ -->
-<div id="intro-overlay">
-    <div class="intro-content">
-        <div class="intro-bigname" id="intro-bigname">
-            <span class="name-glitch" data-text="JOÃO PAULO">JOÃO PAULO</span><br>
-            <span class="name-glitch" data-text="DOMINGUEZ">DOMINGUEZ</span>
-        </div>
-        <div class="intro-tagline" id="intro-tagline">PILOTAGEM &nbsp;·&nbsp; TRÂNSITO &nbsp;·&nbsp; GESTÃO ADMINISTRATIVA</div>
-    </div>
-    <button class="intro-skip-btn" id="intro-skip-btn">PULAR →</button>
-</div>
-<!-- ═══ FIM INTRO ═══ -->
 
 <div class="progress-bar" id="progressBar"></div>
 <div class="orb orb-a"></div>
@@ -1116,13 +1044,14 @@
             <a class="nav-link" href="#formacao">Formação</a>
             <a class="nav-link" href="#habilidades">Habilidades</a>
             <a class="nav-link" href="#contato">Contato</a>
-            <a class="nav-link nav-cv" id="cvNavBtn" href="#" style="background:var(--accent);color:#fff;padding:9px 16px;border-radius:999px;font-weight:700;letter-spacing:0.01em;transition:all 0.22s ease;">⬇ Currículo</a>
+            <a class="nav-link nav-cv" id="cvNavBtn" href="#">⬇ Currículo</a>
         </nav>
         <div class="topbar-actions">
             <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
                 <span class="theme-toggle-track"></span>
                 <span class="theme-toggle-thumb"></span>
             </button>
+            <a class="btn btn-ghost nav-cv nav-cv-mobile" id="cvMobileBtn" href="#">⬇ CV</a>
             <a class="btn btn-ghost" href="https://wa.me/5568992550059?text=Ol%C3%A1%2C%20Jo%C3%A3o%20Paulo%21%20Vi%20seu%20curr%C3%ADculo%20online%20e%20gostaria%20de%20conversar." target="_blank">WhatsApp →</a>
         </div>
     </header>
@@ -1540,24 +1469,11 @@ function setupImageModal() {
 
 /* ═══ CV DOWNLOAD ═══ */
 function setupCVDownload() {
-    const btns = document.querySelectorAll("#cvNavBtn, #cvHeroBtn, #cvContactBtn");
+    const btns = document.querySelectorAll("#cvNavBtn, #cvMobileBtn");
     btns.forEach(btn => {
         if (!btn) return;
-        btn.addEventListener("click", e => {
-            e.preventDefault();
-            const binary = atob(CV_B64);
-            const bytes = new Uint8Array(binary.length);
-            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-            const blob = new Blob([bytes], { type: "image/jpeg" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "CV_João_Paulo_Lopes_Dominguez.jpg";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            setTimeout(() => URL.revokeObjectURL(url), 2000);
-        });
+        btn.href = CV_DATA_URI;
+        btn.setAttribute("download", "CV_João Paulo Lopes Dominguez.jpg");
     });
 }
 
@@ -1577,39 +1493,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupCVDownload();
 });
 
-/* ═══ INTRO ═══ */
-(function () {
-    const overlay = document.getElementById("intro-overlay");
-    const bigname = document.getElementById("intro-bigname");
-    const tagline = document.getElementById("intro-tagline");
-    const skipBtn = document.getElementById("intro-skip-btn");
-    const flash   = document.getElementById("intro-flash");
-    if (!overlay) return;
-    document.body.style.overflow = "hidden";
-
-
-    setTimeout(() => {
-        flash.classList.add("active");
-        setTimeout(() => flash.classList.remove("active"), 400);
-        bigname.classList.add("show");
-        tagline.classList.add("show");
-        function triggerGlitch() {
-            bigname.classList.add("glitching");
-            setTimeout(() => bigname.classList.remove("glitching"), 100+Math.random()*80);
-        }
-        [200,420,680,950].forEach(t => setTimeout(triggerGlitch, t));
-    }, 900);
-
-    let exitDone = false;
-    function exitIntro() {
-        if (exitDone) return;
-        exitDone = true;
-            overlay.classList.add("intro-exit");
-        setTimeout(() => { overlay.remove(); document.body.style.overflow = ""; }, 950);
-    }
-    setTimeout(exitIntro, 3500);
-    skipBtn.addEventListener("click", exitIntro);
-})();
 </script>
 </body>
 </html>
